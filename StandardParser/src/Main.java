@@ -10,55 +10,59 @@ import java.net.URL;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		test1();
+		//test1();
+		test2();
+	}
+	
+	public static void test2()
+	{
+		Crawler c = new Crawler();
+		c.getAllComments(2000012787886L);
 	}
 
 	public static void test1() {
+		// String url =
+		// "http://mobil.derstandard.at/forum/1/2000012787886?_=1426507619442";
+		
+		//String url = "http://mobil.derstandard.at/Forum/Postings?ForumKey.ForumKeyId=2000012787886&ForumKey.ForumKeyType=1&SelectedSortTypeForDropdown=0&Filter.SelectedFilterType=0&CurrentPage=3&SelectedPostingId=&X-Requested-With=XMLHttpRequest&_=0";
+		String url = Downloader.GenerateUrl(2000012787886L,1);
+		String html="";
 		try {
-
-			String url = "http://mobil.derstandard.at/forum/1/2000012787886?_=1426507619442";
-			 
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	 
-			// optional default is GET
-			con.setRequestMethod("GET");
-	 
-			//add request header
-			con.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-	 
-			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
-			System.out.println("Response Code : " + responseCode);
-	 
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-	 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine + "\n");
-			}
-			in.close();
-	 
-			//print result
-			System.out.println(response.toString());
-			
-			PrintWriter pw = new PrintWriter("C:\\temp\\out.html");
-			pw.print(response.toString());
-			pw.close();
-	 
-
+			html = Downloader.GetHtml(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Finish");
+		
+		
+		ParseComments(html);
+	}
+	
+	
+
+	private static void ParseComments(String html) {
+		Document doc = Jsoup.parse(html);
+
+		// System.out.println(doc.getElementById("sorter"));
+
+		HtmlParser parser = new HtmlParser(html);
+		System.out.println("Page count: " + parser.GetPagecount());
+
+		for (Element posting : doc.getElementsByClass("posting")) {
+			int timestamp;
+
+			// Getting timestamp
+			Element date = posting.getElementsByClass("timestamp").first();
+			timestamp = Integer.parseInt(date.attr("data-livestamp"));
+
+			// @PK: get more elements!
+		}
 	}
 }
