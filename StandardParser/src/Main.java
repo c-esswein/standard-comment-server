@@ -24,7 +24,7 @@ public class Main {
 	public static void test2()
 	{
 		Crawler c = new Crawler();
-		c.getAllComments(2000012787886L);
+		c.getAllComments(2000013161996L);
 	}
 
 	public static void test1() {
