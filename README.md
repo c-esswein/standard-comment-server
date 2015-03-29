@@ -5,7 +5,7 @@ Server for analyzing comments on news platforms
 Object Relational Mapper for MySQL.
 
 ## Usage
-Import `DBConn` as Eclipse project and run `Update Project`from the `Maven` menu. This will download all required dependencies.
+Import `DBConn` as Eclipse project and run `Update Project`from the `Maven` menu. This will download all required dependencies. Then add `DBConn` project as requirement to your Java Build Path.
 
 Create an article:
 ```java
