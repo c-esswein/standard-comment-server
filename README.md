@@ -27,7 +27,7 @@ c.setUser("user 1");    // user will be fetched or created
 ORM.save(c);            // save to db
 ```
 
-Create tree structure of comments: *(Parent comment must be saved before adding a child comment, otherwise it will fail because of foreign key constraints)*
+Create tree structure of comments: *(Parent comment must be saved before saving a child comment, otherwise it will fail because of foreign key constraints)*
 ```java
 Comment c1 = new Comment();
 Comment c2 = new Comment();
