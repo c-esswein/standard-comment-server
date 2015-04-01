@@ -1,3 +1,4 @@
+package proglab.parser;
 public class DownloadResponse {
 
 	private String html;
