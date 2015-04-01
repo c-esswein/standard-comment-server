@@ -13,6 +13,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import proglab.dbconn.bean.Article;
+import proglab.dbconn.bean.Comment;
+import proglab.dbconn.orm.ORM;
+
 public class HtmlParser {
 
 	private Document doc;
@@ -34,11 +38,21 @@ public class HtmlParser {
 				.select("span.date").text());
 
 		Article a = new Article();
+		
 		a.setTitle(title);
 		a.setDate(date);
-		a.setParse_date(new Date());
+		a.setParseDate(new Date());
 		a.setUrl(downloadResponse.getUrl());
-		a.setArticle_ext_id(article_ext_id);
+		a.setExtId(Long.toString(article_ext_id));
+		
+		/*ToDo:
+		 * Category
+		 * Subcategory
+		 * Text
+		 * Image URL
+		 * */
+		
+		ORM.save(a);
 		
 		return a;
 	}
@@ -101,7 +115,7 @@ public class HtmlParser {
 					.select("p").text();
 
 			Comment c = new Comment();
-			c.setId(id);
+			/*c.setId(id);
 			c.setUsername(username);
 			c.setUserid(userid);
 			c.setParentid(parentid);
@@ -109,7 +123,7 @@ public class HtmlParser {
 			c.setRed(red);
 			c.setGreen(green);
 			c.setTitle(title);
-			c.setContent(content);
+			c.setContent(content);*/
 
 			comments.add(c);
 

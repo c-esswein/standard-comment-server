@@ -3,6 +3,9 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import proglab.dbconn.bean.Article;
+import proglab.dbconn.bean.Comment;
+
 public class Crawler {
 
 	/**
