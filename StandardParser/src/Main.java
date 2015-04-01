@@ -24,7 +24,8 @@ public class Main {
 	public static void test2()
 	{
 		Crawler c = new Crawler();
-		c.getAllComments(2000013161996L);
+		//c.getAllComments(2000013155655L);
+		c.getArticle(2000013155655L);
 	}
 
 	public static void test1() {
@@ -32,10 +33,10 @@ public class Main {
 		// "http://mobil.derstandard.at/forum/1/2000012787886?_=1426507619442";
 		
 		//String url = "http://mobil.derstandard.at/Forum/Postings?ForumKey.ForumKeyId=2000012787886&ForumKey.ForumKeyType=1&SelectedSortTypeForDropdown=0&Filter.SelectedFilterType=0&CurrentPage=3&SelectedPostingId=&X-Requested-With=XMLHttpRequest&_=0";
-		String url = Downloader.GenerateUrl(2000012787886L,1);
+		String url = Downloader.GenerateUrlToComments(2000012787886L,1);
 		String html="";
 		try {
-			html = Downloader.GetHtml(url);
+			html = Downloader.Download(url).getHtml();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +53,7 @@ public class Main {
 
 		// System.out.println(doc.getElementById("sorter"));
 
-		HtmlParser parser = new HtmlParser(html);
+		/*HtmlParser parser = new HtmlParser(html,0);
 		System.out.println("Page count: " + parser.GetPagecount());
 
 		for (Element posting : doc.getElementsByClass("posting")) {
@@ -63,6 +64,6 @@ public class Main {
 			timestamp = Integer.parseInt(date.attr("data-livestamp"));
 
 			// @PK: get more elements!
-		}
+		}*/
 	}
 }

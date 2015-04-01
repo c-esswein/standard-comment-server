@@ -1,3 +1,4 @@
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,9 +15,31 @@ import org.jsoup.select.Elements;
 public class HtmlParser {
 
 	private Document doc;
+	private DownloadResponse downloadResponse;
+	private long article_ext_id;
 
-	public HtmlParser(String html) {
-		doc = Jsoup.parse(html);
+	public HtmlParser(DownloadResponse _response, long articleId) {
+
+		downloadResponse = _response;
+		doc = Jsoup.parse(_response.getHtml());
+		Charset s = Charset.forName("UTF-8");
+		doc.outputSettings().charset(s);
+		this.article_ext_id=articleId;
+	}
+
+	public Article GetArticle() {
+		String title = doc.getElementById("content-header").select("h1").text();
+		Date date = convertDate(doc.getElementById("content-header")
+				.select("span.date").text());
+
+		Article a = new Article();
+		a.setTitle(title);
+		a.setDate(date);
+		a.setParse_date(new Date());
+		a.setUrl(downloadResponse.getUrl());
+		a.setArticle_ext_id(article_ext_id);
+		
+		return a;
 	}
 
 	public int GetPagecount() {
@@ -76,20 +99,38 @@ public class HtmlParser {
 			content = ele.getElementsByClass("posting-content").first()
 					.select("p").text();
 
-			System.out.println("" + id + "[Parent: " + parentid + "]__(" + red
-					+ ":" + green + ")__" + username + "_" + userid + "_"
-					+ date + "___" + title + "_______" + content);
+			Comment c = new Comment();
+			c.setId(id);
+			c.setUsername(username);
+			c.setUserid(userid);
+			c.setParentid(parentid);
+			c.setDate(date);
+			c.setRed(red);
+			c.setGreen(green);
+			c.setTitle(title);
+			c.setContent(content);
+
+			comments.add(c);
+
 		}
 
 		return comments;
 	}
 
-	private static Date convertDate(String str) {
+	/**
+	 * Converts the string format of the dateTime into a Date object. Not needed
+	 * anymore, as i found the unix timestamp in the source code.
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private static Date convertDateSeconds(String str) {
 		Date date = null;
 
-		// Example: 19. M�rz 2015, 14:27:05
+		// Example: 19. März 2015, 14:27:05
 
-		DateFormat format = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss");
+		DateFormat format = new SimpleDateFormat("dd. MMMM yyyy, HH:mm:ss",
+				Locale.GERMAN);
 		try {
 			date = format.parse(str);
 		} catch (ParseException e) {
@@ -98,7 +139,22 @@ public class HtmlParser {
 		}
 
 		return date;
-
 	}
 
+	private static Date convertDate(String str) {
+		Date date = null;
+
+		// Example: 19. März 2015, 14:27:05
+
+		DateFormat format = new SimpleDateFormat("dd. MMMM yyyy, HH:mm",
+				Locale.GERMAN);
+		try {
+			date = format.parse(str);
+		} catch (ParseException e) {
+			System.out.println("Error while parsing date time. Exception: "
+					+ e.getMessage());
+		}
+
+		return date;
+	}
 }

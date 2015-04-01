@@ -1,28 +1,60 @@
+import java.util.Date;
+
 
 public class Comment {
 
+	private int articleId;
+	private int id;
+	private int parentid = 0;
+	private String username;
+	private int userid;
+	private Date date;
 	private String content;
-	private String poster;
-	private Comment parent;
+	private String title;
 	private int red;
 	private int green;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getParentid() {
+		return parentid;
+	}
+	public void setParentid(int parentid) {
+		this.parentid = parentid;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getPoster() {
-		return poster;
+	public String getTitle() {
+		return title;
 	}
-	public void setPoster(String poster) {
-		this.poster = poster;
-	}
-	public Comment getParent() {
-		return parent;
-	}
-	public void setParent(Comment parent) {
-		this.parent = parent;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public int getRed() {
 		return red;
@@ -36,4 +68,5 @@ public class Comment {
 	public void setGreen(int green) {
 		this.green = green;
 	}
+
 }

@@ -8,6 +8,8 @@ import java.net.URL;
 
 public class Downloader {
 
+	
+	
 	/**
 	 * Gets the HTML content of a website, using modified headers to make the server believe the request was like AJAX
 	 * @param url
@@ -15,7 +17,7 @@ public class Downloader {
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	public static String GetHtml(String url) throws MalformedURLException,
+	public static DownloadResponse Download(String url) throws MalformedURLException,
 			IOException {
 		StringBuffer response = new StringBuffer();
 
@@ -46,7 +48,16 @@ public class Downloader {
 		pw.print(response.toString());
 		pw.close();
 
-		return response.toString();
+		DownloadResponse r = new DownloadResponse();
+		r.setHtml(response.toString());
+		r.setUrl(con.getURL().toString());
+		
+		return r;
+	}
+	
+	public static String GenerateUrlToArticle(long ArticleId)
+	{
+		return "http://www.derstandard.at/" + ArticleId;
 	}
 
 	/**
@@ -54,8 +65,8 @@ public class Downloader {
 	 * @param forumKeyId
 	 * @return
 	 */
-	public static String GenerateUrl(long forumKeyId) {
-		return GenerateUrl(forumKeyId, 1);
+	public static String GenerateUrlToComments(long forumKeyId) {
+		return GenerateUrlToComments(forumKeyId, 1);
 	}
 
 	/**
@@ -64,7 +75,7 @@ public class Downloader {
 	 * @param page
 	 * @return
 	 */
-	public static String GenerateUrl(long forumKeyId, int page) {
+	public static String GenerateUrlToComments(long forumKeyId, int page) {
 		String url = "http://mobil.derstandard.at/Forum/Postings?";
 		url += "ForumKey.ForumKeyId=" + forumKeyId;
 		url += "&ForumKey.ForumKeyType=1&SelectedSortTypeForDropdown=0&Filter.SelectedFilterType=0&";
