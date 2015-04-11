@@ -11,7 +11,7 @@ public class SpellChecker {
 	private Set<String> dict;
 
 	public SpellChecker() {
-		file = new File("resources/big.txt");
+		file = new File("src/main/resources/big.txt");
 		dict = new HashSet<String>(1000000);
 		Scanner scanner = null;
 		try {

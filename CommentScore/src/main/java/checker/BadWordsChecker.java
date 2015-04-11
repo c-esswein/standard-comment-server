@@ -11,7 +11,7 @@ public class BadWordsChecker {
 	private Set<String> dict;
 
 	public BadWordsChecker() {
-		file = new File("resources/bad.txt");
+		file = new File("src/main/resources/bad.txt");
 		dict = new HashSet<String>(100000);
 		Scanner scanner = null;
 		try {
