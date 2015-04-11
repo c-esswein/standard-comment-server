@@ -26,8 +26,5 @@ public final class ORM {
 
 		Ebean.save(bean);
 	}
-
-	public static void delete(final Object bean) {
-		// TODO: delete bean with respect to foreign key constraints
-	}
+	
 }
