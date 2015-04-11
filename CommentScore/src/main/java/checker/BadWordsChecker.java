@@ -1,4 +1,5 @@
-package Checkers;
+package checker;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ public class BadWordsChecker {
 	private Set<String> dict;
 
 	public BadWordsChecker() {
-		file = new File("bad.txt");
+		file = new File("resources/bad.txt");
 		dict = new HashSet<String>(100000);
 		Scanner scanner = null;
 		try {

@@ -1,4 +1,5 @@
-package Checkers;
+package checker;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ public class SpellChecker {
 	private Set<String> dict;
 
 	public SpellChecker() {
-		file = new File("big.txt");
+		file = new File("resources/big.txt");
 		dict = new HashSet<String>(1000000);
 		Scanner scanner = null;
 		try {

@@ -1,4 +1,5 @@
-package Checkers;
+package checker;
+
 
 public class LengthChecker {
 	float recommendedLength;

@@ -1,9 +1,9 @@
 package CommentScore;
 
-import Checkers.BadWordsChecker;
-import Checkers.LengthChecker;
-import Checkers.LexicalDiversity;
-import Checkers.SpellChecker;
+import checker.BadWordsChecker;
+import checker.LengthChecker;
+import checker.LexicalDiversity;
+import checker.SpellChecker;
 
 public class CommentScore {
 	private float spellWeight;
