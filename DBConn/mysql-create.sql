@@ -40,4 +40,3 @@ CREATE TABLE `comment` (
   CONSTRAINT `fk_comment_article_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`article_id`),
   CONSTRAINT `fk_comment_parent_2` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
