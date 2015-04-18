@@ -39,14 +39,14 @@ ORM.save(c2);
 Retrieve comments without sentiment: get 100 comments repeatedly as long as no one without sentiment is left
 ```java
 List<Comment> commentsWithoutSentiment;
-		do {
-			commentsWithoutSentiment = ORM.getCommentsWithoutSentiment(100);
-			for (Comment c : commentsWithoutSentiment) {
-				// sentiment analysis
-				// c.setSentiment(...);
-				ORM.save(c);
-			}
-		} while (commentsWithoutSentiment.size() > 0);
+do {
+	commentsWithoutSentiment = ORM.getCommentsWithoutSentiment(100);
+	for (Comment c : commentsWithoutSentiment) {
+		// sentiment analysis
+		// c.setSentiment(...);
+		ORM.save(c);
+	}
+} while (commentsWithoutSentiment.size() > 0);
 ```
 
 Do the same with `ORM.getCommentsWithoutQualityScore(rows)` to get comments without quality score.
