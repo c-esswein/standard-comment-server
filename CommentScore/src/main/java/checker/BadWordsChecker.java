@@ -20,7 +20,7 @@ public class BadWordsChecker {
 			e1.printStackTrace();
 		}
 		while (scanner.hasNextLine()) {
-			dict.add(scanner.nextLine().toLowerCase());
+			dict.add(scanner.nextLine().toLowerCase().trim());
 		}
 		scanner.close();
 
@@ -32,7 +32,7 @@ public class BadWordsChecker {
 		String[] tokens = string.split("\\s+");
 
 		for (String token : tokens) {
-			if (dict.contains(token.toLowerCase())) {
+			if (dict.contains(token.toLowerCase().trim())) {
 				matches++;
 			}
 		}
