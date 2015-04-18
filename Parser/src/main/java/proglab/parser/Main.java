@@ -25,8 +25,7 @@ public class Main {
 	public static void test2()
 	{
 		Crawler c = new Crawler();
-		//c.getAllComments(2000013155655L);
-		c.getArticle(2000013155655L);
+		c.Crawl();
 	}
 
 	public static void test1() {

@@ -105,7 +105,7 @@ public class Article {
 	}
 
 	public void setSubCategory(final String subCategory) {
-		this.subCategory = category;
+		this.subCategory = subCategory;
 	}
 
 	public String getImageUrl() {

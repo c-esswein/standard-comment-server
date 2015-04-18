@@ -1,62 +1,76 @@
 package proglab.parser;
+
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import proglab.dbconn.bean.Article;
 import proglab.dbconn.bean.Comment;
+import proglab.dbconn.orm.ORM;
 
 public class Crawler {
 
+	public void Crawl() {
+		try {
+			String url = Downloader.GenerateUrlToMain();
+			HtmlParser parser = new HtmlParser(Downloader.Download(url));
+			List<String> categories = parser.getCategories();
+
+			for (String category : categories) {
+				url = Downloader.GenerateUrlToCategory(category);
+				parser = new HtmlParser(Downloader.Download(url));
+				List<Long> articles = parser.getArticles();
+				int i = 1;
+				for (Long articleId : articles) {
+					System.out.println("Working on article " + (i++) + " of "
+							+ articles.size() + " of category: " + category);
+					
+					storeArticle(articleId);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Something happened: " + e.getMessage());
+		}
+	}
+
 	/**
-	 * Gets all information of the article
+	 * Gets all information for an article, adds comments and stores it in the
+	 * database
 	 * 
 	 * @param articleId
 	 */
-	public void getArticle(long articleId) {
-		String url = Downloader.GenerateUrlToArticle(articleId);
+	public void storeArticle(long articleId) {
+
 		try {
+			String url = Downloader.GenerateUrlToArticle(articleId);
 			HtmlParser parser = new HtmlParser(Downloader.Download(url),
 					articleId);
-			
+			url = Downloader.GenerateUrlToComments(articleId);
+			int pageCount = (new HtmlParser(Downloader.Download(url), articleId))
+					.GetPagecount();
+
 			Article a = parser.GetArticle();
-			a=a;
+			ORM.save(a);
+
+			for (Comment c : parser.getAllComments(articleId, pageCount)) {
+				a.addComment(c);
+				storeComment(c);
+			}
+			ORM.save(a);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Gets all comments of an article (crawls all pages of paginator)
-	 * 
-	 * @param articleId
+	/*
+	 * Stores a comment (recursively, starting with parent)
 	 */
-	public void getAllComments(long articleId) {
+	private void storeComment(Comment c) {
+		if (c.getParent() != null)
+			storeComment(c.getParent());
 
-		// url to comments. Needed to get the number of pages
-		String url = Downloader.GenerateUrlToComments(articleId);
-		try {
-			int pageCount = (new HtmlParser(Downloader.Download(url), articleId))
-					.GetPagecount();
-			int commentCount = 0;
-			List<Comment> comments = new ArrayList<Comment>();
-
-			for (int i = 1; i <= pageCount; i++) {
-				url = Downloader.GenerateUrlToComments(articleId, i);
-				HtmlParser parser = new HtmlParser(Downloader.Download(url),
-						articleId);
-
-				List<Comment> tmp = parser.GetComments();
-				comments.addAll(tmp);
-				commentCount += tmp.size();
-				System.out.println("Page: " + i);
-			}
-			System.out.println("Got " + commentCount + " comments.");
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ORM.save(c);
 	}
 }

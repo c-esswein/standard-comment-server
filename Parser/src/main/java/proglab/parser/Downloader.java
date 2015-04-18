@@ -1,7 +1,11 @@
 package proglab.parser;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -9,17 +13,17 @@ import java.net.URL;
 
 public class Downloader {
 
-	
-	
 	/**
-	 * Gets the HTML content of a website, using modified headers to make the server believe the request was like AJAX
+	 * Gets the HTML content of a website, using modified headers to make the
+	 * server believe the request was like AJAX
+	 * 
 	 * @param url
 	 * @return
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	public static DownloadResponse Download(String url) throws MalformedURLException,
-			IOException {
+	public static DownloadResponse Download(String url)
+			throws MalformedURLException, IOException {
 		StringBuffer response = new StringBuffer();
 
 		HttpURLConnection con = (HttpURLConnection) (new URL(url))
@@ -44,6 +48,8 @@ public class Downloader {
 			response.append(inputLine + "\n");
 		}
 		in.close();
+				
+
 
 		PrintWriter pw = new PrintWriter("C:\\temp\\out.html");
 		pw.print(response.toString());
@@ -52,17 +58,26 @@ public class Downloader {
 		DownloadResponse r = new DownloadResponse();
 		r.setHtml(response.toString());
 		r.setUrl(con.getURL().toString());
-		
+
 		return r;
 	}
-	
-	public static String GenerateUrlToArticle(long ArticleId)
-	{
+
+	public static String GenerateUrlToMain() {
+		return "http://www.derstandard.at";
+	}
+
+	public static String GenerateUrlToCategory(String category) {
+		return "http://www.derstandard.at" + category + "?_chron=t";
+	}
+
+	public static String GenerateUrlToArticle(long ArticleId) {
 		return "http://www.derstandard.at/" + ArticleId;
 	}
 
 	/**
-	 * Generates a link to the comments of the first page (paginator of the comments)
+	 * Generates a link to the comments of the first page (paginator of the
+	 * comments)
+	 * 
 	 * @param forumKeyId
 	 * @return
 	 */
@@ -72,6 +87,7 @@ public class Downloader {
 
 	/**
 	 * Generates a link to the comments of one page (paginator of the comments)
+	 * 
 	 * @param forumKeyId
 	 * @param page
 	 * @return
