@@ -36,7 +36,7 @@ ORM.save(c1);         // save to db
 ORM.save(c2);
 ```
 
-Retrieve comments without sentiment: get 100 comments repeatedly as long as no one without sentiment are left
+Retrieve comments without sentiment: get 100 comments repeatedly as long as no one without sentiment is left
 ```java
 List<Comment> commentsWithoutSentiment;
 		do {
