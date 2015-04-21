@@ -26,7 +26,7 @@ public class CommentScore {
 		spellChecker = new SpellChecker();
 		badChecker = new BadWordsChecker();
 		lexChecker = new LexicalDiversity();
-		lenChecker = new LengthChecker(100);
+		lenChecker = new LengthChecker(70);
 	}
 
 	public float rateComment(String comment) {

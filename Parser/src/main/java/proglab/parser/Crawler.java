@@ -17,19 +17,28 @@ public class Crawler {
 			List<String> categories = parser.getCategories();
 
 			for (String category : categories) {
-				url = Downloader.GenerateUrlToCategory(category);
-				parser = new HtmlParser(Downloader.Download(url));
-				List<Long> articles = parser.getArticles();
-				int i = 1;
-				for (Long articleId : articles) {
-					System.out.println("Working on article " + (i++) + " of "
-							+ articles.size() + " of category: " + category);
-					
-					storeArticle(articleId);
+				try {
+					url = Downloader.GenerateUrlToCategory(category);
+					parser = new HtmlParser(Downloader.Download(url));
+					List<Long> articles = parser.getArticles();
+					int i = 1;
+					for (Long articleId : articles) {
+						Logging.Log("Working on article " + (i++) + " of "
+								+ articles.size() + " of category: " + category);
+						try {
+							storeArticle(articleId);
+						} catch (Exception e) {
+							Logging.Log("Error while parsing article "
+									+ articleId + ": " + e.getMessage());
+						}
+					}
+				} catch (Exception e) {
+					Logging.Log("Error while parsing category: "
+							+ e.getMessage());
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Something happened: " + e.getMessage());
+			Logging.Log("Something happened: " + e.getMessage());
 		}
 	}
 
