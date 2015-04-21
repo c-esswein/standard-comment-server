@@ -1,4 +1,5 @@
 package proglab.parser;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -17,10 +18,11 @@ import org.jsoup.select.Elements;
 public class Main {
 
 	public static void main(String[] args) {
-		try{
-		Crawler c = new Crawler();
-		c.Crawl();
+		try {
+			Crawler c = new Crawler();
+			c.Crawl();
+		} catch (Exception e) {
+			Logging.Log("General Exception: " + e.getMessage());
 		}
-		catch(Exception e){ Logging.Log("General Exception: " + e.getMessage()); }
 	}
 }
