@@ -60,6 +60,10 @@ public class Article {
 		return this.id;
 	}
 	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
 	public String getExtId() {
 		return this.extId;
 	}
