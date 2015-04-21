@@ -126,11 +126,11 @@ public class HtmlParser {
 
 				parser.AddComments(comments);
 
-				System.out.println("Page: " + i);
+				Logging.Log("Page: " + i);
 			}
 
 		} catch (IOException e) {
-			System.out.println("Error while getting comments. Exception: "
+			Logging.Log("Error while getting comments. Exception: "
 					+ e.getMessage());
 		}
 
@@ -273,7 +273,7 @@ public class HtmlParser {
 		try {
 			date = format.parse(str);
 		} catch (ParseException e) {
-			System.out.println("Error while parsing date time. Exception: "
+			Logging.Log("Error while parsing date time. Exception: "
 					+ e.getMessage());
 		}
 
@@ -290,7 +290,7 @@ public class HtmlParser {
 		try {
 			date = format.parse(str);
 		} catch (ParseException e) {
-			System.out.println("Error while parsing date time. Exception: "
+			Logging.Log("Error while parsing date time. Exception: "
 					+ e.getMessage());
 		}
 

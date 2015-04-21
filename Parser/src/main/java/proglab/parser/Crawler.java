@@ -22,14 +22,14 @@ public class Crawler {
 				List<Long> articles = parser.getArticles();
 				int i = 1;
 				for (Long articleId : articles) {
-					System.out.println("Working on article " + (i++) + " of "
+					Logging.Log("Working on article " + (i++) + " of "
 							+ articles.size() + " of category: " + category);
 					
 					storeArticle(articleId);
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Something happened: " + e.getMessage());
+			Logging.Log("Something happened: " + e.getMessage());
 		}
 	}
 

@@ -49,12 +49,6 @@ public class Downloader {
 		}
 		in.close();
 				
-
-
-		PrintWriter pw = new PrintWriter("C:\\temp\\out.html");
-		pw.print(response.toString());
-		pw.close();
-
 		DownloadResponse r = new DownloadResponse();
 		r.setHtml(response.toString());
 		r.setUrl(con.getURL().toString());
