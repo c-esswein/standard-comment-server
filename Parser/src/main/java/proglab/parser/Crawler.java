@@ -10,6 +10,12 @@ import proglab.dbconn.orm.ORM;
 
 public class Crawler {
 
+	private ORM orm;
+
+	public Crawler() {
+		orm = ORM.getInstance();
+	}
+
 	public void Crawl() {
 		try {
 			String url = Downloader.GenerateUrlToMain();
@@ -59,17 +65,20 @@ public class Crawler {
 					.GetPagecount();
 
 			Article a = parser.GetArticle();
-			ORM.save(a);
+			orm.save(a);
 
 			for (Comment c : parser.getAllComments(articleId, pageCount)) {
-				a.addComment(c);
-				storeComment(c);
+				try {
+					a.addComment(c);
+					storeComment(c);
+				} catch (Exception e) {
+					Logging.Log("Failed to store comment: " + c.getExtId()+". Exception: " + e.getMessage());
+				}
 			}
-			ORM.save(a);
+			orm.save(a);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logging.Log(e.getMessage());
 		}
 	}
 
@@ -80,6 +89,6 @@ public class Crawler {
 		if (c.getParent() != null)
 			storeComment(c.getParent());
 
-		ORM.save(c);
+		orm.save(c);
 	}
 }

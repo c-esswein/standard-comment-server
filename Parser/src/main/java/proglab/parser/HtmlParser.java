@@ -63,7 +63,11 @@ public class HtmlParser {
 		String category = nav.select("a").first().text();
 		nav = nav.select("ul").first();
 		nav = nav.getElementsByClass("active").first();
-		String subCategory = nav.select("a").first().text();
+
+		String subCategory = "";
+
+		if (nav != null)
+			subCategory = nav.select("a").first().text();
 
 		Article a = new Article();
 
@@ -85,9 +89,9 @@ public class HtmlParser {
 	public int GetPagecount() {
 		Element buttonLast = doc.select("button.std-button.last").first();
 
-		if(doc.select("p.no-postings.context").size()>0)
+		if (doc.select("p.no-postings.context").size() > 0)
 			return 0;
-		
+
 		if (buttonLast == null)
 			throw new IllegalArgumentException(
 					"Unable to get pagecount. HTML element 'std-button last' not fount in HTML.");
@@ -222,9 +226,8 @@ public class HtmlParser {
 		for (Element element : nav.children()) {
 			Element tmp1 = element.select("ul").first();
 
-			if(element.select("a.hidden").size()>0)
+			if (element.select("a.hidden").size() > 0)
 				continue;
-			
 
 			if (tmp1.getElementsByClass("nav_empty").size() > 0) {
 				list.add(element.select("a").first().attr("href"));
@@ -240,20 +243,18 @@ public class HtmlParser {
 
 		return list;
 	}
-	
+
 	public List<Long> getArticles() {
 		List<Long> list = new ArrayList<Long>();
-		
+
 		Element element = doc.getElementById("mainContent");
-		element=element.select("ul.stories").first();
-		
-		for(Element ele : element.children())
-		{
+		element = element.select("ul.stories").first();
+
+		for (Element ele : element.children()) {
 			list.add(Long.parseLong(ele.attr("id").replace("_", "")));
 		}
-		
-		
-		return list;		
+
+		return list;
 	}
 
 	/**
@@ -284,6 +285,9 @@ public class HtmlParser {
 		Date date = null;
 
 		// Example: 19. März 2015, 14:27:05
+
+		if (str.contains("Jänner"))
+			str = str.replace("Jänner", "Januar");
 
 		DateFormat format = new SimpleDateFormat("dd. MMMM yyyy, HH:mm",
 				Locale.GERMAN);
