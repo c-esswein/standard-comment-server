@@ -13,7 +13,9 @@ import com.avaje.ebean.config.ServerConfig;
 
 public final class ORM {
 
-	public ORM() {
+	private static ORM instance = new ORM();
+	
+	private ORM() {
 		ServerConfig config = new ServerConfig();
 		config.setName("mysql");
 
@@ -109,6 +111,10 @@ public final class ORM {
 	public List<Comment> getCommentsWithoutQualityScore(final int rows) {
 		return Ebean.find(Comment.class).where().eq("quality_score", 0)
 				.setMaxRows(rows).findList();
+	}
+	
+	public static ORM getInstance() {
+		return instance;
 	}
 
 }
