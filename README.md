@@ -9,7 +9,7 @@ Import `DBConn` as Eclipse project and run `Update Project`from the `Maven` menu
 
 Create an article:
 ```java
-ORM orm = new ORM();
+ORM orm = ORM.getInstance();
 Article a = new Article();
 a.setTitle("Testartikel");
 a.setText("Lorem Ipsum ...");
@@ -19,7 +19,7 @@ orm.save(a);      // save to db
 
 Add a comment to an article: *(Article must be saved before adding a comment, otherwise it will fail because of foreign key constraints)*
 ```java
-ORM orm = new ORM();
+ORM orm = ORM.getInstance();
 Comment c = new Comment();
 c.setTitle("Kommentar 1");
 c.setText("Kommentartext");
@@ -31,7 +31,7 @@ orm.save(c);            // save to db
 
 Create tree structure of comments: *(Parent comment must be saved before saving a child comment, otherwise it will fail because of foreign key constraints)*
 ```java
-ORM orm = new ORM();
+ORM orm = ORM.getInstance();
 Comment c1 = new Comment();
 Comment c2 = new Comment();
 c1.addComment(c2);    // alternative: c2.setParent(c1);
@@ -41,7 +41,7 @@ orm.save(c2);
 
 Retrieve comments without sentiment: get 100 comments repeatedly as long as no one without sentiment is left
 ```java
-ORM orm = new ORM();
+ORM orm = ORM.getInstance();
 List<Comment> commentsWithoutSentiment;
 do {
 	commentsWithoutSentiment = orm.getCommentsWithoutSentiment(100);
