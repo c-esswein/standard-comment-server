@@ -22,8 +22,8 @@ public final class ORM {
 
 		DataSourceConfig mysql = new DataSourceConfig();
 		mysql.setDriver("com.mysql.jdbc.Driver");
-		mysql.setUsername("root");
-		mysql.setPassword("");
+		mysql.setUsername("proglab-user");
+		mysql.setPassword("pw");
 		mysql.setUrl("jdbc:mysql://localhost:3306/derstandard?characterEncoding=UTF-8");
 
 		config.setDataSourceConfig(mysql);
