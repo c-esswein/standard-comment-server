@@ -48,7 +48,7 @@ do {
 	for (Comment c : commentsWithoutSentiment) {
 		// sentiment analysis
 		// c.setSentiment(...);
-		ORM.save(c);
+		orm.save(c);
 	}
 } while (commentsWithoutSentiment.size() > 0);
 ```
