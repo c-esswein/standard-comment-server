@@ -30,13 +30,13 @@ public class CommentScore {
 	}
 
 	public float rateComment(String comment) {
-		System.out.println("Spell: " + spellChecker.check(comment) + "%");
-		System.out.println("Bad: " + badChecker.check(comment) + "%");
-		System.out.println("Lex: " + lexChecker.check(comment) + "%");
-		System.out.println("Len: " + lenChecker.check(comment) + "%");
-
-		return calcAVG(spellChecker.check(comment), badChecker.check(comment),
-				lexChecker.check(comment), lenChecker.check(comment));
+		float avg = calcAVG(spellChecker.check(comment),
+				badChecker.check(comment), lexChecker.check(comment),
+				lenChecker.check(comment));
+		if (avg != 0)
+			return avg;
+		else
+			return 0.0001f;
 	}
 
 	private float calcAVG(float spellScore, float badScore, float lexScore,

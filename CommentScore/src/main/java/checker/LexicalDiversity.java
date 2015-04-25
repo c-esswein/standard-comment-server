@@ -18,7 +18,7 @@ public class LexicalDiversity {
 
 	public LexicalDiversity() {
 		occurences = new HashMap<String, Integer>();
-		file = new File("src/main/resources/stopwords.txt");
+		file = new File("stopwords.txt");
 		dict = new HashSet<String>(100000);
 		Scanner scanner = null;
 		try {
@@ -35,24 +35,27 @@ public class LexicalDiversity {
 	public float check(String string) {
 		String[] split = string.split("\\s+");
 		List<String> tokens = new ArrayList<String>();
-		
+
 		for (String token : split) {
 			tokens.add(token);
 		}
-		
+
 		tokens.removeAll(dict);
 		occurences.clear();
+		if (tokens.size() != 0) {
 
-		for (String token : tokens) {
-			token = token.toLowerCase();
-			if (occurences.containsKey(token)) {
-				occurences.put(token, occurences.get(token) + 1);
-			} else {
-				occurences.put(token, 1);
+			for (String token : tokens) {
+				token = token.toLowerCase();
+				if (occurences.containsKey(token)) {
+					occurences.put(token, occurences.get(token) + 1);
+				} else {
+					occurences.put(token, 1);
+				}
 			}
-		}
 
-		return (checkForSingleOcc(occurences) / tokens.size()) * 100;
+			return (checkForSingleOcc(occurences) / tokens.size()) * 100;
+		} else
+			return 0.0001f;
 	}
 
 	private float checkForSingleOcc(Map<String, Integer> occurences) {

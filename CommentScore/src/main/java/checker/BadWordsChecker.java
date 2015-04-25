@@ -11,7 +11,7 @@ public class BadWordsChecker {
 	private Set<String> dict;
 
 	public BadWordsChecker() {
-		file = new File("src/main/resources/bad.txt");
+		file = new File("bad.txt");
 		dict = new HashSet<String>(100000);
 		Scanner scanner = null;
 		try {
@@ -29,14 +29,17 @@ public class BadWordsChecker {
 	public float check(String string) {
 
 		float matches = 0;
-		String[] tokens = string.split("\\s+");
+		String[] tokens = string.split("\\s+|\\-");
 
-		for (String token : tokens) {
-			if (dict.contains(token.toLowerCase().trim())) {
-				matches++;
+		if (tokens.length != 0) {
+			for (String token : tokens) {
+				if (dict.contains(token.toLowerCase().trim())) {
+					matches++;
+				}
 			}
-		}
-		return (100 - ((matches / tokens.length) * 100));
+			return (100 - ((matches / tokens.length) * 100));
+		} else
+			return 0.0001f;
 	}
 
 }
