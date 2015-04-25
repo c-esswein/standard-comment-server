@@ -4,6 +4,7 @@ import java.util.List;
 
 import proglab.dbconn.bean.Article;
 import proglab.dbconn.bean.Comment;
+import proglab.dbconn.bean.Polarity;
 import proglab.dbconn.bean.User;
 
 import com.avaje.ebean.Ebean;
@@ -13,7 +14,7 @@ import com.avaje.ebean.config.ServerConfig;
 
 public final class ORM {
 
-	private static ORM instance = new ORM();
+	private final static ORM instance = new ORM();
 	
 	private ORM() {
 		ServerConfig config = new ServerConfig();
@@ -21,8 +22,8 @@ public final class ORM {
 
 		DataSourceConfig mysql = new DataSourceConfig();
 		mysql.setDriver("com.mysql.jdbc.Driver");
-		mysql.setUsername("proglab-user");
-		mysql.setPassword("pw");
+		mysql.setUsername("root");
+		mysql.setPassword("");
 		mysql.setUrl("jdbc:mysql://localhost:3306/derstandard?characterEncoding=UTF-8");
 
 		config.setDataSourceConfig(mysql);
@@ -36,6 +37,7 @@ public final class ORM {
 		config.addClass(Article.class);
 		config.addClass(Comment.class);
 		config.addClass(User.class);
+		config.addClass(Polarity.class);
 
 		EbeanServerFactory.create(config);
 	}
@@ -58,7 +60,7 @@ public final class ORM {
 			}
 
 			// check if comment exists and update votes
-			if (comment.getExtId() != null) {
+			if (comment.getId() == 0 && comment.getExtId() != null) {
 				Comment c = Ebean.find(Comment.class).where()
 						.eq("comment_ext_id", comment.getExtId()).findUnique();
 
@@ -85,7 +87,7 @@ public final class ORM {
 		else if (bean.getClass() == Article.class) {
 			Article article = (Article) bean;
 
-			if (article.getExtId() != null) {
+			if (article.getId() == 0 && article.getExtId() != null) {
 				Article a = Ebean.find(Article.class).where()
 						.eq("article_ext_id", article.getExtId()).findUnique();
 

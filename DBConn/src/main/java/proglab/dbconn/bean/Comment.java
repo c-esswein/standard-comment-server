@@ -45,7 +45,7 @@ public class Comment {
 	private int downVotes;
 
 	@Column(name = "sentiment")
-	private Sentiment sentiment;
+	private Polarity sentiment;
 
 	@Column(name = "quality_score")
 	private float qualityScore;
@@ -127,11 +127,11 @@ public class Comment {
 		this.downVotes = downVotes;
 	}
 
-	public Sentiment getSentiment() {
+	public Polarity getSentiment() {
 		return this.sentiment;
 	}
 
-	public void setSentiment(final Sentiment sentiment) {
+	public void setSentiment(final Polarity sentiment) {
 		this.sentiment = sentiment;
 	}
 
