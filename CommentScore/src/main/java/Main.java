@@ -19,9 +19,6 @@ public class Main {
 				String comment = (c.getTitle() + " " + c.getText()).replaceAll(
 						"[^a-zA-ZäöüÄÜÖß\\- ]", "");
 				c.setQualityScore(score.rateComment(comment));
-				System.out.println("Comment: " + c.getTitle() + " " + c.getText());
-				System.out.println("Comment replace: " + comment);
-				System.out.println("Score: " + score.rateComment(comment));
 				orm.save(c);
 			}
 		} while (commentsWithoutQualityScore.size() > 0);
