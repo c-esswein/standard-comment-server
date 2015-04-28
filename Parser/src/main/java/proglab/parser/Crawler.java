@@ -11,9 +11,17 @@ import proglab.dbconn.orm.ORM;
 public class Crawler {
 
 	private ORM orm;
+	private String startCategory = null;
+	private Boolean startCategoryFound = true;
 
 	public Crawler() {
 		orm = ORM.getInstance();
+	}
+
+	public Crawler(String _startCategory) {
+		orm = ORM.getInstance();
+		startCategory = _startCategory;
+		startCategoryFound = false;
 	}
 
 	public void Crawl() {
@@ -24,6 +32,13 @@ public class Crawler {
 
 			for (String category : categories) {
 				try {
+					
+					if(category.equals(startCategory))
+						startCategoryFound=true;
+					
+					if(!startCategoryFound)
+						continue;
+					
 					url = Downloader.GenerateUrlToCategory(category);
 					parser = new HtmlParser(Downloader.Download(url));
 					List<Long> articles = parser.getArticles();
@@ -48,6 +63,8 @@ public class Crawler {
 		}
 	}
 
+	List<Comment> toStore = new ArrayList<Comment>();
+
 	/**
 	 * Gets all information for an article, adds comments and stores it in the
 	 * database
@@ -67,18 +84,25 @@ public class Crawler {
 			Article a = parser.GetArticle();
 			orm.save(a);
 
-			for (Comment c : parser.getAllComments(articleId, pageCount)) {
+			toStore = parser.getAllComments(articleId, pageCount);
+			List<Comment> tmpComments = new ArrayList<Comment>(toStore);
+
+			Logging.Log("Article stored. Storing comments.");
+			for (Comment c : tmpComments) {
 				try {
 					a.addComment(c);
 					storeComment(c);
 				} catch (Exception e) {
-					Logging.Log("Failed to store comment: " + c.getExtId()+". Exception: " + e.getMessage());
+					Logging.Log("Failed to store comment: " + c.getExtId()
+							+ ". Exception: " + e.getMessage()+"\n\n\n"+
+							c.toString()
+							);
 				}
 			}
-			orm.save(a);
+			
 
 		} catch (Exception e) {
-			Logging.Log(e.getMessage());
+			Logging.Log("Error while storing article. Exception: " + e.getMessage());
 		}
 	}
 
@@ -89,6 +113,9 @@ public class Crawler {
 		if (c.getParent() != null)
 			storeComment(c.getParent());
 
-		orm.save(c);
+		if (toStore.contains(c)) {
+			toStore.remove(c);
+			orm.save(c);
+		}
 	}
 }
