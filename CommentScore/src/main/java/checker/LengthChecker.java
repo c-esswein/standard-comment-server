@@ -1,6 +1,5 @@
 package checker;
 
-
 public class LengthChecker {
 	float recommendedLength;
 
@@ -9,11 +8,15 @@ public class LengthChecker {
 	}
 
 	public float check(String string) {
-		String[] tokens = string.split("\\s+");
+		String[] tokens = string.split("\\s+|\\-");
 
-		if (tokens.length > recommendedLength)
-			return 100;
-		else
-			return (tokens.length / recommendedLength) * 100;
+		if (tokens.length != 0) {
+
+			if (tokens.length > recommendedLength)
+				return 100;
+			else
+				return (tokens.length / recommendedLength) * 100;
+		} else
+			return 0;
 	}
 }

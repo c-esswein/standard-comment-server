@@ -9,8 +9,10 @@ import java.util.Set;
 public class SpellChecker {
 	private File file;
 	private Set<String> dict;
+	private StringBuilder recognised;
 
 	public SpellChecker() {
+		recognised = new StringBuilder();
 		file = new File("big.txt");
 		dict = new HashSet<String>(1000000);
 		Scanner scanner = null;
@@ -27,18 +29,26 @@ public class SpellChecker {
 	}
 
 	public float check(String string) {
-
+		recognised.setLength(0);
 		float matches = 0;
 		String[] tokens = string.split("\\s+|\\-");
 		if (tokens.length != 0) {
 			for (String token : tokens) {
 				if (dict.contains(token.toLowerCase().trim())) {
 					matches++;
+					recognised.append(token);
+					recognised.append(" ");
 				}
 			}
-			return ((matches / tokens.length) * 100);
+			float result = (matches / tokens.length) * 100;
+
+			return result;
 		} else
-			return 0.0001f;
+			return 0;
+	}
+
+	public String getRecognisedWords() {
+		return recognised.toString();
 	}
 
 }

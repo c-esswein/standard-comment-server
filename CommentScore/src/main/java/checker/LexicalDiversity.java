@@ -33,7 +33,7 @@ public class LexicalDiversity {
 	}
 
 	public float check(String string) {
-		String[] split = string.split("\\s+");
+		String[] split = string.split("\\s+|\\-");
 		List<String> tokens = new ArrayList<String>();
 
 		for (String token : split) {
@@ -43,7 +43,6 @@ public class LexicalDiversity {
 		tokens.removeAll(dict);
 		occurences.clear();
 		if (tokens.size() != 0) {
-
 			for (String token : tokens) {
 				token = token.toLowerCase();
 				if (occurences.containsKey(token)) {
@@ -52,10 +51,11 @@ public class LexicalDiversity {
 					occurences.put(token, 1);
 				}
 			}
+			float result = (checkForSingleOcc(occurences) / tokens.size()) * 100;
 
-			return (checkForSingleOcc(occurences) / tokens.size()) * 100;
+			return result;
 		} else
-			return 0.0001f;
+			return 0;
 	}
 
 	private float checkForSingleOcc(Map<String, Integer> occurences) {

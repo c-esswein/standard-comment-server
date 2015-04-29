@@ -27,19 +27,19 @@ public class BadWordsChecker {
 	}
 
 	public float check(String string) {
-
 		float matches = 0;
 		String[] tokens = string.split("\\s+|\\-");
-
 		if (tokens.length != 0) {
 			for (String token : tokens) {
 				if (dict.contains(token.toLowerCase().trim())) {
 					matches++;
 				}
 			}
-			return (100 - ((matches / tokens.length) * 100));
+			float result = 100 - ((matches / tokens.length) * 100);
+			return result;
+
 		} else
-			return 0.0001f;
+			return 0;
 	}
 
 }
