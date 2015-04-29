@@ -69,13 +69,11 @@ public class HtmlParser {
 		if (nav != null)
 			subCategory = nav.select("a").first().text();
 
-		Article a = new Article();
-
+		Article a = ORM.getInstance().createArticle(Long.toString(article_ext_id));
 		a.setTitle(title);
 		a.setDate(date);
 		a.setParseDate(new Date());
 		a.setUrl(downloadResponse.getUrl());
-		a.setExtId(Long.toString(article_ext_id));
 		a.setText(text);
 		a.setCategory(category);
 		a.setSubCategory(subCategory);
@@ -183,9 +181,8 @@ public class HtmlParser {
 					.select("p").text();
 
 			// Create an object
-			Comment c = new Comment();
-			c.setExtId(Integer.toString(id));
-
+			Comment c = ORM.getInstance().createComment(Integer.toString(id));
+			
 			User u = new User();
 			u.setExtId(Integer.toString(userid));
 			u.setUsername(username);
