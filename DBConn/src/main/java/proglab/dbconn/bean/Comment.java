@@ -179,4 +179,15 @@ public class Comment {
 		user.setUsername(username);
 	}
 	
+	public String toString()
+	{
+		String res ="";
+		if(parent!=null)
+			res+=parent.toString();
+		
+		res+=">"+extId;
+		
+		return res;
+	}
+	
 }
