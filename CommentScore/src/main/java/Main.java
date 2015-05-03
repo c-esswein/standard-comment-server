@@ -22,7 +22,7 @@ public class Main {
 				orm.save(c);
 			}
 		} while (commentsWithoutQualityScore.size() > 0);
-		// System.out.println(score.rateComment("Bilderbuch..äh Reisepassfranzosen. "));
+//		 System.out.println(score.rateComment("apple"));
 
 	}
 }

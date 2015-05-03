@@ -19,8 +19,8 @@ public class CommentScore {
 	}
 
 	public float rateComment(String comment) {
-		String formattedComment = comment
-				.replaceAll("[^a-zA-ZäöüÄÜÖß\\- ]", " ");
+		String formattedComment = comment.replaceAll("[^a-zA-ZäöüÄÜÖß\\- ]",
+				" ");
 		float spellRes = spellChecker.check(formattedComment);
 		String recognisedWords = spellChecker.getRecognisedWords();
 		float badRes = badChecker.check(recognisedWords);
@@ -38,18 +38,18 @@ public class CommentScore {
 			float lenScore) {
 
 		double lenWeight = 100;
-		double badWeight = spellScore;
+		double badWeight = ((Math.log10(lenScore + 1) * 50) * 0.7 + spellScore * 0.3) / 2;
 		double lexWeight = lenScore;
-		double spellWeight = Math.log10(lenScore+1) * 75;
+		double spellWeight = Math.log10(lenScore + 1) * 50;
 
 		float avg = (float) ((((spellScore * spellWeight)
 				+ (badScore * badWeight) + (lexScore * lexWeight) + (lenScore * lenWeight)) / (lenWeight
 				+ badWeight + lexWeight + spellWeight)));
 
-//		System.out.println("Spelling: " + spellScore + " - " + spellWeight);
-//		System.out.println("Bad: " + badScore + " - " + badWeight);
-//		System.out.println("Lex: " + lexScore + " - " + lexWeight);
-//		System.out.println("Len: " + lenScore + " - " + lenWeight);
+		System.out.println("Spelling: " + spellScore + " - " + spellWeight);
+		System.out.println("Bad: " + badScore + " - " + badWeight);
+		System.out.println("Lex: " + lexScore + " - " + lexWeight);
+		System.out.println("Len: " + lenScore + " - " + lenWeight);
 
 		return avg;
 	}
