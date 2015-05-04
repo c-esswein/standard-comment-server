@@ -46,10 +46,10 @@ public class CommentScore {
 				+ (badScore * badWeight) + (lexScore * lexWeight) + (lenScore * lenWeight)) / (lenWeight
 				+ badWeight + lexWeight + spellWeight)));
 
-		System.out.println("Spelling: " + spellScore + " - " + spellWeight);
-		System.out.println("Bad: " + badScore + " - " + badWeight);
-		System.out.println("Lex: " + lexScore + " - " + lexWeight);
-		System.out.println("Len: " + lenScore + " - " + lenWeight);
+//		System.out.println("Spelling: " + spellScore + " - " + spellWeight);
+//		System.out.println("Bad: " + badScore + " - " + badWeight);
+//		System.out.println("Lex: " + lexScore + " - " + lexWeight);
+//		System.out.println("Len: " + lenScore + " - " + lenWeight);
 
 		return avg;
 	}
