@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -29,6 +30,8 @@ public class User {
 	@OneToMany (mappedBy="user")
 	private List<Comment> comments;
 
+	@OneToOne(mappedBy = "user")
+	private UserStat userStat;
 	
 	public User() {
 		this.comments = new ArrayList<Comment>();
@@ -65,6 +68,14 @@ public class User {
 	
 	public void addComment(final Comment comment, final boolean setUser) {
 		this.comments.add(comment);
+	}
+	
+	public UserStat getUserStat() {
+		return this.userStat;
+	}
+	
+	public void setUserStat(final UserStat userStat) {
+		this.userStat = userStat;
 	}
 	
 }

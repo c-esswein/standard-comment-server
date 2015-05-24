@@ -1,10 +1,12 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE article;
+drop table article;
 
-DROP TABLE comment;
+drop table comment;
 
-DROP TABLE user;
+drop table user;
+
+drop table user_stats;
 
 SET FOREIGN_KEY_CHECKS=1;
 

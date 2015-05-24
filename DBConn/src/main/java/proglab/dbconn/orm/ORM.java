@@ -6,6 +6,7 @@ import proglab.dbconn.bean.Article;
 import proglab.dbconn.bean.Comment;
 import proglab.dbconn.bean.Polarity;
 import proglab.dbconn.bean.User;
+import proglab.dbconn.bean.UserStat;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.EbeanServerFactory;
@@ -15,7 +16,7 @@ import com.avaje.ebean.config.ServerConfig;
 public final class ORM {
 
 	private final static ORM instance = new ORM();
-	
+
 	private ORM() {
 		ServerConfig config = new ServerConfig();
 		config.setName("mysql");
@@ -38,41 +39,42 @@ public final class ORM {
 		config.addClass(Comment.class);
 		config.addClass(User.class);
 		config.addClass(Polarity.class);
+		config.addClass(UserStat.class);
 
 		EbeanServerFactory.create(config);
 	}
-	
+
 	public Article createArticle(final String extId) {
 		Article a = Ebean.find(Article.class).where()
-					.eq("article_ext_id", extId).findUnique();
+				.eq("article_ext_id", extId).findUnique();
 
-			if (a != null)
-				return a;
-			
-			a = new Article();
-			a.setExtId(extId);
+		if (a != null)
 			return a;
+
+		a = new Article();
+		a.setExtId(extId);
+		return a;
 	}
-	
+
 	public Comment createComment(final String extId) {
 		Comment c = Ebean.find(Comment.class).where()
-					.eq("comment_ext_id", extId).findUnique();
+				.eq("comment_ext_id", extId).findUnique();
 
-			if (c != null)
-				return c;
-			
-			c = new Comment();
-			c.setExtId(extId);
+		if (c != null)
 			return c;
+
+		c = new Comment();
+		c.setExtId(extId);
+		return c;
 	}
 
 	public void save(final Article article) {
 		Ebean.save(article);
 	}
-	
+
 	public void save(final Comment comment) {
 		User user = comment.getUser();
-		
+
 		if (user != null && user.getId() == 0 && user.getUsername() != "") {
 			User u = Ebean.find(User.class).where()
 					.eq("username", user.getUsername()).findUnique();
@@ -86,6 +88,10 @@ public final class ORM {
 
 		Ebean.save(comment);
 	}
+	
+	public void save(final UserStat userStat) {
+		Ebean.save(userStat);
+	}
 
 	public List<Comment> getCommentsWithoutSentiment(final int rows) {
 		return Ebean.find(Comment.class).where().eq("sentiment", null)
@@ -96,7 +102,19 @@ public final class ORM {
 		return Ebean.find(Comment.class).where().eq("quality_score", 0)
 				.setMaxRows(rows).findList();
 	}
-	
+
+	public List<Article> getAllArticles() {
+		return Ebean.find(Article.class).findList();
+	}
+
+	public List<Comment> getAllComments() {
+		return Ebean.find(Comment.class).findList();
+	}
+
+	public List<User> getAllUsers() {
+		return Ebean.find(User.class).findList();
+	}
+
 	public static ORM getInstance() {
 		return instance;
 	}
