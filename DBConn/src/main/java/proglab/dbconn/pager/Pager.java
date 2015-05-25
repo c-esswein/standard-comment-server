@@ -22,6 +22,9 @@ public final class Pager<T> {
 	}
 	
 	public boolean hasNext() {
+		if (this.page == 0) {
+			return true;
+		}
 		return this.pagedList.hasNext();
 	}
 	
