@@ -25,6 +25,7 @@ create table comment (
   quality_score             float,
   parent_id                 integer,
   user_id                   integer,
+  replies                   integer,
   constraint ck_comment_sentiment check (sentiment in (0,1,2)),
   constraint pk_comment primary key (comment_id))
 ;
