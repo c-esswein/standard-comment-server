@@ -7,6 +7,7 @@ import proglab.dbconn.bean.Comment;
 import proglab.dbconn.bean.Polarity;
 import proglab.dbconn.bean.User;
 import proglab.dbconn.bean.UserStat;
+import proglab.dbconn.pager.Pager;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.EbeanServerFactory;
@@ -88,7 +89,7 @@ public final class ORM {
 
 		Ebean.save(comment);
 	}
-	
+
 	public void save(final UserStat userStat) {
 		Ebean.save(userStat);
 	}
@@ -103,16 +104,16 @@ public final class ORM {
 				.setMaxRows(rows).findList();
 	}
 
-	public List<Article> getAllArticles() {
-		return Ebean.find(Article.class).findList();
+	public Pager<Article> getAllArticles() {
+		return new Pager<Article>(Article.class, 1000);
 	}
 
-	public List<Comment> getAllComments() {
-		return Ebean.find(Comment.class).findList();
+	public Pager<Comment> getAllComments() {
+		return new Pager<Comment>(Comment.class, 1000);
 	}
 
-	public List<User> getAllUsers() {
-		return Ebean.find(User.class).findList();
+	public Pager<User> getAllUsers() {
+		return new Pager<User>(User.class, 1000);
 	}
 
 	public static ORM getInstance() {
