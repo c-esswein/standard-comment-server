@@ -7,7 +7,7 @@ Object Relational Mapper for MySQL.
 ## Usage
 Import `DBConn` as Eclipse project and run `Update Project`from the `Maven` menu. This will download all required dependencies. Then add `DBConn` project as requirement to your Java Build Path.
 
-Complete example:
+### Complete example
 ```java
 ORM orm = ORM.getInstance();
 
@@ -37,6 +37,7 @@ orm.save(a1);
 orm.save(c1);
 orm.save(c2);
 ```
+### Retrieving comments for sentiment analysis and quality score
 
 Retrieve comments without sentiment: get 100 comments repeatedly as long as no one without sentiment is left
 ```java
@@ -53,6 +54,8 @@ do {
 ```
 
 Do the same with `orm.getCommentsWithoutQualityScore(rows)` to get comments without quality score.
+
+### Paging
 
 Since we have large amount of data, the JVM will crash while consuming all articles, comments and users. Therefore a Pager class is provided which loads small parts of the data.
 
