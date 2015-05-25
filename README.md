@@ -53,3 +53,18 @@ do {
 ```
 
 Do the same with `orm.getCommentsWithoutQualityScore(rows)` to get comments without quality score.
+
+Since we have large amount of data, the JVM will crash while consuming all articles, comments and users. Therefore a Pager class is provided which loads small parts of the data.
+
+```java
+Pager<Comment> pager = orm.getAllComments();
+List<Comment> comments;
+
+while(pager.hasNext()) {
+	comments = pager.next();
+	for (Comment comment : comments) {
+		// do something
+		orm.save(comment);
+	}
+}
+```
