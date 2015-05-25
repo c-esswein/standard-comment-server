@@ -61,7 +61,10 @@ public class Comment {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	@Column(name = "replies")
+	private int replies;
 
+	
 	public Comment() {
 		this.comments = new ArrayList<Comment>();
 	}
@@ -179,6 +182,14 @@ public class Comment {
 		user.setUsername(username);
 	}
 	
+	public int getReplies() {
+		return this.replies;
+	}
+
+	public void setReplies(final int replies) {
+		this.replies = replies;
+	}
+
 	public String toString() {
 		String res = "";
 		if (parent != null) {
